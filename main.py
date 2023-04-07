@@ -52,9 +52,9 @@ try:
     t_data = []
     for i, n in enumerate(n_values):
         t_data.append([n, rek_times[i],rek_values[i], iter_times[i], iter_values[i]])
-    print('{:<5}{:<20}{:<20}{:<20}{:<20}'.format('n', 'Время рекурсии','Значение рекурсии', 'Время итерации','Значение итерации'))
+    print('{:<5}|{:<20}|{:<20}|{:<20}|{:<20}'.format('n', 'Время рекурсии','Значение рекурсии', 'Время итерации','Значение итерации'))
     for data in t_data:
-        print('{:<5}{:<20}{:<20}{:<20}{:<20}'.format(data[0], data[1], data[2], data[3], data[4]))
+        print('{:<5}|{:<20}|{:<20}|{:<20}|{:<20}'.format(data[0], data[1], data[2], data[3], data[4]))
 
 
 
