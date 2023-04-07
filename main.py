@@ -23,17 +23,38 @@ try:
             f_n[i] = f_n[i-2] * (i-1)
         return f_n[n]
 
-
     start = time.time()
     result = f_rek(n)
     end = time.time()
     print("\nрекурсия:", result, "\nВремя:", end - start)
-
-
     start = time.time()
     result = f_iter(n)
     end = time.time()
     print("\nитерация:", result, "\nВремя:", end - start)
+
+    rek_times = []
+    rek_values = []
+    iter_times = []
+    iter_values = []
+    n_values = list(range(1, n + 1))
+
+    for n in n_values:
+        start = time.time()
+        rek_values.append(f_rek(n))
+        end = time.time()
+        rek_times.append(end - start)
+
+        start = time.time()
+        iter_values.append(f_iter(n))
+        end = time.time()
+        iter_times.append(end - start)
+
+    t_data = []
+    for i, n in enumerate(n_values):
+        t_data.append([n, rek_times[i], iter_times[i], rek_values[i], iter_values[i]])
+    print('{:<5}|{:<20}|{:<20}|{:<20}|{:<20}'.format('n', 'Время рекурсии', 'Время итерации', 'Значение рекурсии','Значение итерации'))
+    for data in t_data:
+        print('{:<5}|{:<20}|{:<20}|{:<20}|{:<20}'.format(data[0], data[1], data[2], data[3], data[4]))
 
 
 
