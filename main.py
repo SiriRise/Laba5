@@ -7,21 +7,28 @@
 import timeit
 import matplotlib.pyplot as plt
 
+
+
+def f_rek(n):
+    if n <= 2:
+        return 1
+    else:
+        return f_rek(n - 2) * (n - 1)
+
+
+def f_iter(n):
+    f_n = [1] * 4
+    for i in range(3, n + 1):
+        f_n[3] = f_n[1] * (i - 1)
+        f_n[0], f_n[1], f_n[2] = f_n[1], f_n[2], f_n[3]
+    return f_n[3]
+
+
 try:
     n = int(input('Введите натуральное число n: '))
 
-    def f_rek(n):
-        if n <= 2:
-            return 1
-        else:
-            return f_rek(n - 2) * (n - 1)
-
-    def f_iter(n):
-        f_n = [1] * 4
-        for i in range(3, n + 1):
-            f_n[3] = f_n[1] * (i - 1)
-            f_n[0], f_n[1], f_n[2] = f_n[1], f_n[2], f_n[3]
-        return f_n[3]
+    while n < 1:
+        n = int(input("Введите натуральное число: "))
 
     start = timeit.default_timer()
     result = f_rek(n)
@@ -66,4 +73,6 @@ try:
 
 except ValueError:
     print('Перезагрузите программу и введите натуральное число')
+
+
 
