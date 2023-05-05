@@ -17,11 +17,11 @@ def f_rek(n):
 
 
 def f_iter(n):
-    f_n = [1] * 3
+    f_n = [1] * 2
     for i in range(3, n + 1):
-        f_n[2] = f_n[0] * (i - 1)
-        f_n[0], f_n[1] = f_n[1], f_n[2]
-    return f_n[2]
+        iter = f_n[0] * (i - 1)
+        f_n[0], f_n[1] = f_n[1], iter
+    return f_n[1]
 
 
 try:
