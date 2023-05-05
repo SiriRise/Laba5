@@ -2,75 +2,65 @@
 # Написать программу сравнительного вычисления данной функции рекурсивно и итерационно.
 # Определить границы применимости рекурсивного и итерационного подхода.
 # Результаты сравнительного исследования времени вычисления представить в табличной и графической форме.
-
-
-import time
+import timeit
 import matplotlib.pyplot as plt
-import sys
-sys.setrecursionlimit(4000)
+
 try:
     n = int(input('Введите натуральное число n: '))
 
     def f_rek(n):
-        if n == 1 or n == 2:
+        if n <= 2:
             return 1
         else:
             return f_rek(n - 2) * (n - 1)
 
     def f_iter(n):
-        f_n =[1]*(n+1)
+        f_n = [1] * 4
         for i in range(3, n + 1):
-            f_n[i] = f_n[i-2] * (i-1)
-        return f_n[n]
+            f_n[3] = f_n[1] * (i - 1)
+            f_n[0], f_n[1], f_n[2] = f_n[1], f_n[2], f_n[3]
+        return f_n[3]
 
-    start = time.time()
+    start = timeit.default_timer()
     result = f_rek(n)
-    end = time.time()
-    print("\nрекурсия:", result, "\nВремя:", end - start)
-    start = time.time()
+    print("\nрекурсия:", result, "\nВремя:", '{:.7f}'.format(timeit.default_timer() - start))
+
+    start = timeit.default_timer()
     result = f_iter(n)
-    end = time.time()
-    print("\nитерация:", result, "\nВремя:", end - start)
+    print("\nитерация:", result, "\nВремя:", '{:.7f}'.format(timeit.default_timer() - start))
+
+
+    s = int(input("С каким шагом будет формироваться таблица? Введите число: "))
 
     rek_times = []
-    rek_values = []
     iter_times = []
+    rek_values = []
     iter_values = []
-    n_values = list(range(1, n + 1))
+    n_values = list(range(1, n + 1,s))
 
     for n in n_values:
-        start = time.time()
+        start = timeit.default_timer()
         rek_values.append(f_rek(n))
-        end = time.time()
-        rek_times.append(end - start)
+        rek_times.append(timeit.default_timer() - start)
 
-        start = time.time()
+        start = timeit.default_timer()
         iter_values.append(f_iter(n))
-        end = time.time()
-        iter_times.append(end - start)
+        iter_times.append(timeit.default_timer() - start)
 
     t_data = []
     for i, n in enumerate(n_values):
-        t_data.append([n, rek_times[i],rek_values[i], iter_times[i], iter_values[i]])
-    print('{:<5}|{:<20}|{:<20}|{:<20}|{:<20}'.format('n', 'Время рекурсии','Значение рекурсии', 'Время итерации','Значение итерации'))
+        t_data.append([n, '{:.7f}'.format(rek_times[i]),'{:.7f}'.format(iter_times[i]), rek_values[i], iter_values[i]])
+    print('{:<5}|{:<15}|{:<15}|{:<35}|{:<35}'.format('n', 'Время рекурсии','Время итерации','Значение рекурсии','Значение итерации'))
     for data in t_data:
-        print('{:<5}|{:<20}|{:<20}|{:<20}|{:<20}'.format(data[0], data[1], data[2], data[3], data[4]))
+        print('{:<5}|{:<15}|{:<15}|{:<35}|{:<35}'.format(data[0], data[1],data[2], data[3],data[4]))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    plt.plot(n_values, iter_times, label='Итерация')
+    plt.plot(n_values, rek_times, label='Рекурсия')
+    plt.xlabel('n')
+    plt.ylabel('Время (с)')
+    plt.title('Сравнение рекурсивного и итерационного подхода')
+    plt.legend()
+    plt.show()
 
 except ValueError:
     print('Перезагрузите программу и введите натуральное число')
